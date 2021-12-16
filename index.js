@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+/**
+ * 
+ * @author Debapriya Majumder
+ * 
+ */
+const wifiPassword = require('wifi-password');
+const alerts = require('terminal-alerts');
+const init = require('./utils/init');
+const cli = require('./utils/cli');
+const log = require('./utils/log');
+
+const input = cli.input;
+const flags = cli.flags;
+
+const { clear , debug } = flags;
+
+
+(async () => {
+
+    init({clear});
+    input.includes(`help`) && cli.showHelp(0);
+    const password = await wifiPassword();
+
+    alerts({
+        type : `info`,
+        name : ` WiFi password`,
+        msg : password
+    });
+
+    debug && log(flags);
+
+})();
